@@ -1,26 +1,38 @@
-# app/schemas/user.py
-
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
-from app.enums import PreferenceType
+
+
+# Schema para representar a preferência
+class PreferenceBase(BaseModel):
+    name: str
+
+class PreferenceOut(PreferenceBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
 
 class UserBase(BaseModel):
     email: EmailStr
     name: str
 
+
 class UserCreate(BaseModel):
-    username: str
-    email: str
+    name: str
+    email: EmailStr
     password: str
-    current_preferences: Optional[PreferenceType]  # opcional, pode ser passado na criação
+    preferences: Optional[List[str]] = []  # nomes das preferências
+
 
 class UserLogin(BaseModel):
-    email: str
+    email: EmailStr
     password: str
+
 
 class UserOut(UserBase):
     id: int
-    preferences: List[str]
+    preferences: List[PreferenceOut]
 
     class Config:
         orm_mode = True

@@ -19,17 +19,6 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     hashed_password = Column(String, nullable=False)
-    
-    # Preferências salvas no cadastro (ex: "bares", "museus")
-    preferences = Column(SqlEnum(PreferenceType), nullable=False)
 
-    # Preferências momentâneas (armazenadas em JSON para maior flexibilidade)
-    current_preferences = Column(JSONB, nullable=True)  # Exemplo: {"activity": "Jantar", "location": "Centro"}
-
-class Preference(Base):
-    __tablename__ = "preferences"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
-    
-    users = relationship("User", secondary=user_preferences, back_populates="preferences")
+    # Relacionamento muitos-para-muitos com preferências
+    preferences = relationship("Preference", back_populates="user", cascade="all, delete")

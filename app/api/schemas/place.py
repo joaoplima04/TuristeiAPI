@@ -1,18 +1,31 @@
 from pydantic import BaseModel
-from app.enums import PlaceTypeEnum
+from typing import List
+
+
+class TypeBase(BaseModel):
+    name: str
+
+class TypeOut(TypeBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
 
 class PlaceBase(BaseModel):
     name: str
     city: str
     latitude: float
     longitude: float
-    type: PlaceTypeEnum
+
 
 class PlaceCreate(PlaceBase):
-    pass
+    types: List[str]  # nomes dos tipos (ex: "bares", "museus", etc.)
+
 
 class PlaceOut(PlaceBase):
     id: int
+    type: List[TypeOut]  # tipo do local
 
     class Config:
         orm_mode = True
