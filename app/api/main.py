@@ -1,10 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.database import Base, engine
-from app.api.routers import users, places  
-
-# Cria as tabelas no banco de dados
-Base.metadata.create_all(bind=engine)
+from app.api.routers import users, places, preferences  
 
 app = FastAPI(
     title="Turistei API",
@@ -24,7 +21,11 @@ app.add_middleware(
 # Rotas principais
 app.include_router(users.router)
 app.include_router(places.router)
+app.include_router(preferences.router)
 
 @app.get("/")
 def root():
     return {"message": "Bem-vindo à Turistei API!"}
+
+# Cria as tabelas no banco de dados
+Base.metadata.create_all(bind=engine)

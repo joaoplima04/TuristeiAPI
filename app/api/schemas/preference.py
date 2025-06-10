@@ -1,11 +1,11 @@
+# schemas.py
 from pydantic import BaseModel
 
-class PreferenceCreate(BaseModel):
-    categoria: str
+class PreferenceBase(BaseModel):
+    name: str
 
-class PreferenceOut(BaseModel):
+class PreferenceOut(PreferenceBase):
     id: int
-    categoria: str
 
     class Config:
         orm_mode = True

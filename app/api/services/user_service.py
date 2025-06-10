@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.api.models.user import User
-from app.api.models.preference import Preference
+from app.api.models.user import Preference
 from app.api.schemas.user import UserCreate
 from app.security import hash_password
 
