@@ -12,7 +12,7 @@ router = APIRouter(
     tags=["users"]
 )
 
-@router.post("/", response_model=UserOut)
+@router.post("/cadastro", response_model=UserOut)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     # Verifica se o email já está cadastrado
     db_user = get_user_by_email(db, user.email)

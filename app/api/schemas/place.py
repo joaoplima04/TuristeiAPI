@@ -1,12 +1,13 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
-class TypeBase(BaseModel):
+# Novo schema base para Preference
+class PreferenceBase(BaseModel):
     name: str
 
-class TypeOut(TypeBase):
-    id: int
+class PreferenceOut(BaseModel):
+    name: str
 
     class Config:
         orm_mode = True
@@ -15,17 +16,26 @@ class TypeOut(TypeBase):
 class PlaceBase(BaseModel):
     name: str
     city: str
+    description: Optional[str] = None
     latitude: float
     longitude: float
+    image_url: Optional[str] = None
 
 
+# Schema de criação: aceita lista de nomes das preferências
 class PlaceCreate(PlaceBase):
-    types: List[str]  # nomes dos tipos (ex: "bares", "museus", etc.)
+    preferences: List[str]  # nomes das preferências
 
 
-class PlaceOut(PlaceBase):
+# Schema de resposta: retorna lista de nomes das preferências
+class PlaceOut(BaseModel):
     id: int
-    type: List[TypeOut]  # tipo do local
+    name: str
+    description: Optional[str] = None
+    latitude: float
+    longitude: float
+    image_url: Optional[str] = None
+    preferences: List[PreferenceOut]  # nomes das preferências associadas
 
     class Config:
         orm_mode = True

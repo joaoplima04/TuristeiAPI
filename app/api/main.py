@@ -1,13 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.api.database import Base, engine
-from app.api.routers import users, places, preferences  
+from app.api.routers import users, places, preferences, recommendations
 
 app = FastAPI(
     title="Turistei API",
     description="API para cadastro de usuários e lugares turísticos",
     version="1.0.0"
 )
+
+app.mount("/src/img", StaticFiles(directory="app/api/src/img"), name="static_images")
 
 # Configurações de CORS
 app.add_middleware(
@@ -22,6 +25,7 @@ app.add_middleware(
 app.include_router(users.router)
 app.include_router(places.router)
 app.include_router(preferences.router)
+app.include_router(recommendations.router)
 
 @app.get("/")
 def root():

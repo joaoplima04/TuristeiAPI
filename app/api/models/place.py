@@ -1,14 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
 from app.api.database import Base
-
-# Tabela de associação entre usuários e preferências salvas no cadastro
-place_type = Table(
-    "place_type",
-    Base.metadata,
-    Column("place_id", Integer, ForeignKey("places.id"), primary_key=True),
-    Column("type_id", Integer, ForeignKey("type.id"), primary_key=True),
-)
+from app.api.models.user import place_type
 
 class Place(Base):
     __tablename__ = "places"
@@ -18,19 +11,13 @@ class Place(Base):
     city = Column(String, nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    
+    description = Column(String, nullable=True)    # texto descritivo do lugar
+    image_url = Column(String, nullable=True)      # url da imagem (pode ser local ou externa)
 
     # Relacionamento muitos-para-muitos com preferências
-    type = relationship(
-        "Type",
+    preferences = relationship(
+        "Preference",
         secondary=place_type,
-        backref="place"
+        back_populates="places"
     )
-
-
-class Type(Base):
-    __tablename__ = "type"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
-    
-    users = relationship("Place", secondary=place_type, back_populates="type")

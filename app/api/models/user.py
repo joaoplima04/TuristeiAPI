@@ -10,6 +10,14 @@ user_preferences = Table(
     Column('preference_id', ForeignKey('preferences.id'), primary_key=True)
 )
 
+# Tabela associativa entre lugares e preferências
+place_type = Table(
+    'place_type',
+    Base.metadata,
+    Column('place_id', ForeignKey('places.id'), primary_key=True),
+    Column('preference_id', ForeignKey('preferences.id'), primary_key=True)
+)
+
 class User(Base):
     __tablename__ = "users"
 
@@ -38,3 +46,4 @@ class Preference(Base):
         secondary=user_preferences,
         back_populates="preferences"
     )
+    places = relationship("Place", secondary=place_type, back_populates="preferences")
