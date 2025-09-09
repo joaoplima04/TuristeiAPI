@@ -4,7 +4,10 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from app.api.database import Base
-from app.api.models import user, place
+from app.api.models.user import User
+from app.api.models.place import Place
+from app.api.models.user import Preference
+from app.api.models.schedule import Schedule, ScheduleItem  # sua nova tabela
 
 from alembic import context
 
