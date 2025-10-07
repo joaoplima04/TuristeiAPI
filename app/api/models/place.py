@@ -21,3 +21,4 @@ class Place(Base):
         secondary=place_type,
         back_populates="places"
     )
+    schedule_items = relationship("ScheduleItem", back_populates="place")

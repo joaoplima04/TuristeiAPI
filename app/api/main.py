@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.api.database import Base, engine
-from app.api.routers import users, places, preferences, recommendations
+from app.api.routers import users, places, preferences, recommendations, schedules
 
 app = FastAPI(
     title="Turistei API",
@@ -26,6 +26,7 @@ app.include_router(users.router)
 app.include_router(places.router)
 app.include_router(preferences.router)
 app.include_router(recommendations.router)
+app.include_router(schedules.router)
 
 @app.get("/")
 def root():

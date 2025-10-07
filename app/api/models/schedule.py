@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DATE
+from datetime import date
 from sqlalchemy.orm import relationship
 from app.api.database import Base
 
@@ -8,7 +9,7 @@ class Schedule(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"))
-
+    date = Column(DATE, nullable=True)
     user = relationship("User", back_populates="schedules")
     items = relationship("ScheduleItem", back_populates="schedule", cascade="all, delete-orphan")
 
@@ -20,6 +21,7 @@ class ScheduleItem(Base):
     schedule_id = Column(Integer, ForeignKey("schedules.id", ondelete="CASCADE"))
     place_id = Column(Integer, ForeignKey("places.id"), nullable=True)  # pode ser nulo
     custom_name = Column(String, nullable=True)  # se não tiver place
+    description = Column(String, nullable=True)
     start_time = Column(String, nullable=True)  # pode ser datetime ou apenas HH:mm
     end_time = Column(String, nullable=True) 
     duration_minutes = Column(Integer, nullable=True)

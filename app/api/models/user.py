@@ -33,6 +33,8 @@ class User(Base):
         back_populates="users",
         cascade="all, delete"
     )
+        # Relacionamento com schedules
+    schedules = relationship("Schedule", back_populates="user")
 
 class Preference(Base):
     __tablename__ = "preferences"
