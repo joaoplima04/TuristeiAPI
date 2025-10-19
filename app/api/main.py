@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.api.database import Base, engine
 from app.api.routers import users, places, preferences, recommendations, schedules
+import os
 
 app = FastAPI(
     title="Turistei API",
@@ -10,7 +11,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.mount("/src/img", StaticFiles(directory="app/api/src/img"), name="static_images")
+# Caminho absoluto, garantindo compatibilidade
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+IMG_DIR = os.path.join(BASE_DIR, ".\src\img")
+
+app.mount("/static", StaticFiles(directory=IMG_DIR), name="static")
 
 # Configurações de CORS
 app.add_middleware(

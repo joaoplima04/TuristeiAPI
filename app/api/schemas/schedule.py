@@ -18,7 +18,7 @@ class ScheduleCreate(BaseModel):
 
 class ScheduleItemOut(BaseModel):
     id: int
-    custom_name: Optional[str]  # renomeado de title
+    title: Optional[str] = None  # renomeado de title
     description: Optional[str] = None
     start_time: Optional[str] = None
     end_time: Optional[str] = None
