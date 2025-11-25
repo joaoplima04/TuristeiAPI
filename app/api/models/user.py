@@ -35,6 +35,12 @@ class User(Base):
     )
         # Relacionamento com schedules
     schedules = relationship("Schedule", back_populates="user")
+    
+    attraction_requests = relationship(
+        "AttractionRequest",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )
 
 class Preference(Base):
     __tablename__ = "preferences"

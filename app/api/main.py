@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.api.database import Base, engine
-from app.api.routers import users, places, preferences, recommendations, schedules
+from app.api.routers import users, places, preferences, recommendations, schedules, attraction_request
 import os
 
 app = FastAPI(
@@ -32,6 +32,7 @@ app.include_router(places.router)
 app.include_router(preferences.router)
 app.include_router(recommendations.router)
 app.include_router(schedules.router)
+app.include_router(attraction_request.router)
 
 @app.get("/")
 def root():
